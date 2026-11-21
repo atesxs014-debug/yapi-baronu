@@ -9,19 +9,19 @@
 #splash,#rotate{background:var(--splash,#081915)}
 
 /* 1. Güneşli Şehir: aydınlık, yumuşak, sıcak */
-html[data-theme="gunes"]{--bg:#fdf4e7;--grid:transparent;--panel:#ffffff;--panel2:#fff1dc;--line:#f0d9b8;--fg:#3b2816;--muted:#8d7357;
-  --accent:#ff8a00;--accent-ink:#fff;--accent-sh:#c96400;--good:#22a862;--bad:#e5484d;--info:#2f8fe8;--violet:#8b5cf6;
+html[data-theme="gunes"]{--bg:#ecd3aa;--grid:transparent;--panel:#fff8ec;--panel2:#f6e0bd;--line:#dbb684;--fg:#2a1a0b;--muted:#6c4f33;
+  --accent:#f07400;--accent-ink:#fff;--accent-sh:#b05300;--good:#11864a;--bad:#d2353b;--info:#1b6fc4;--violet:#8b5cf6;
   --f-disp:"Baloo 2",system-ui,sans-serif;--f-body:"Nunito",system-ui,sans-serif;--f-num:"Nunito",system-ui,sans-serif;
-  --chip:rgba(59,40,22,.55);--scrim:rgba(59,40,22,.35);--splash:#fdf4e7;color-scheme:light}
-html[data-theme="gunes"] body{background-image:radial-gradient(#f3dfc2 1.2px,transparent 1.2px);background-size:22px 22px}
+  --chip:rgba(59,40,22,.55);--scrim:rgba(59,40,22,.35);--splash:#ecd3aa;color-scheme:light}
+html[data-theme="gunes"] body{background-image:radial-gradient(#ddbd8e 1.2px,transparent 1.2px);background-size:22px 22px}
 html[data-theme="gunes"] .card,html[data-theme="gunes"] .tile,html[data-theme="gunes"] .city,html[data-theme="gunes"] .pcard,html[data-theme="gunes"] .quick button,html[data-theme="gunes"] .mrow{border-radius:16px;border-color:transparent;box-shadow:0 4px 14px rgba(160,110,50,.13)}
 html[data-theme="gunes"] .btn{border-radius:999px}
 html[data-theme="gunes"] .num,html[data-theme="gunes"] .cash{font-weight:800}
 html[data-theme="gunes"] h2,html[data-theme="gunes"] h3,html[data-theme="gunes"] .brand,html[data-theme="gunes"] .city .cn{text-transform:none;letter-spacing:0}
-html[data-theme="gunes"] header.hud{background:#fff;border-bottom:0;box-shadow:0 2px 12px rgba(160,110,50,.15)}
-html[data-theme="gunes"] nav.tabs{background:#fff;border-color:transparent;box-shadow:0 0 12px rgba(160,110,50,.15)}
+html[data-theme="gunes"] header.hud{background:#fff8ec;border-bottom:0;box-shadow:0 2px 12px rgba(160,110,50,.15)}
+html[data-theme="gunes"] nav.tabs{background:#fff8ec;border-color:transparent;box-shadow:0 0 12px rgba(160,110,50,.15)}
 html[data-theme="gunes"] .sheet{border-top:0;border-radius:24px 24px 0 0}
-html[data-theme="gunes"] .dash,html[data-theme="gunes"] .scorecard{background:linear-gradient(135deg,#ff9f1c,#ff6b3d);color:#fff}
+html[data-theme="gunes"] .dash,html[data-theme="gunes"] .scorecard{background:linear-gradient(135deg,#f28a0c,#e0502a);color:#fff}
 html[data-theme="gunes"] .dash .k,html[data-theme="gunes"] .dash .meta,html[data-theme="gunes"] .dash .grid4 .k{color:rgba(255,255,255,.85)}
 html[data-theme="gunes"] .dash .grid4>div{background:rgba(255,255,255,.2)}
 html[data-theme="gunes"] .dash .pos,html[data-theme="gunes"] .dash .neg{color:#fff}

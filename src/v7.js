@@ -1,7 +1,7 @@
 
 // ================= v7: harita, ilçe parsel kartları, projeler, proje detayı, ofis =================
 let landList=false,mapFil='all',curProj=null;
-const TIER7=[['Lüks','#e8705f',1.6],['Premium','#f2a93b',1.1],['Orta','#43b394',0.75],['Ekonomik','#9fb2c8',0]];
+const TIER7=[['Lüks','#d4503f',1.6],['Premium','#e58a1a',1.1],['Orta','#24957a',0.75],['Ekonomik','#7189a8',0]];
 function tier7(dm){return TIER7.find(t=>dm>=t[2])}
 const TRm2=v=>Math.round(v).toLocaleString('tr-TR')+' ₺';
 const fx2=v=>v.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -50,7 +50,7 @@ function cityMap(cid){
   const bridges=cid==='istanbul'?[[52,220,246],[104,224,244],[138,214,252]].map(([y,x1,x2])=>`<path d="M${x1} ${y}H${x2}" class="brg"/><path d="M${x1} ${y}H${x2}" class="brg2"/>`).join(''):'';
   return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="group" aria-label="${c.n} ilçe haritası">
    <defs>${clip}<pattern id="${uid7}w" width="30" height="16" patternUnits="userSpaceOnUse"><path d="M3 9q3.5-3.5 7 0t7 0" class="wave"/></pattern>
-    <linearGradient id="${uid7}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fd0ea"/><stop offset="1" stop-color="#3f9cc2"/></linearGradient>
+    <linearGradient id="${uid7}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4fa9cc"/><stop offset="1" stop-color="#1f6f96"/></linearGradient>
     <radialGradient id="${uid7}h" cx=".3" cy=".2" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".32"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".12"/></radialGradient>
     <filter id="${uid7}f" x="-5%" y="-5%" width="110%" height="115%"><feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="#0b3a52" flood-opacity=".45"/></filter></defs>
    <rect width="${W}" height="${H}" ${ls.sea?`fill="url(#${uid7}s)"`:'class="v7out"'}/><rect width="${W}" height="${H}" fill="url(#${uid7}w)" opacity="${ls.sea?1:.5}"/>

@@ -176,7 +176,7 @@ main.corp>.v7off,main.corp>.v7logo{grid-column:1/-1}
   .v7mapc{height:auto;aspect-ratio:400/240}.v7side{height:auto}.v7pr{max-height:none}
 }
 /* güzelleştirme */
-.v7mapc{background:linear-gradient(#7fd0ea,#3f9cc2);border:3px solid #fff;box-shadow:0 6px 20px rgba(30,90,120,.25)}
+.v7mapc{background:linear-gradient(#4fa9cc,#1f6f96);border:3px solid #fff;box-shadow:0 6px 20px rgba(30,90,120,.25)}
 .v7cell{stroke:#fff;stroke-width:1.6;stroke-linejoin:round}
 .v7map .blk rect{fill:#fff;opacity:.16;pointer-events:none}.v7map .prk circle{fill:#2f8a4a;opacity:.22;pointer-events:none}
 .v7foam{fill:none;stroke:rgba(255,255,255,.35);stroke-width:5}
