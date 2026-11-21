@@ -1,0 +1,105 @@
+name: Mobil derleme (APK + IPA)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  android:
+    name: Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Bağımlılıkları kur
+        run: npm install
+      - name: Android projesini oluştur
+        run: npx cap add android
+      - name: İkon ve açılış ekranı
+        run: npx capacitor-assets generate --android || echo "ikon üretilemedi, varsayılan kullanılacak"
+      - name: Yatay ekran ayarı
+        run: |
+          sed -i 's/android:name=".MainActivity"/android:name=".MainActivity" android:screenOrientation="sensorLandscape"/' android/app/src/main/AndroidManifest.xml
+          grep -n screenOrientation android/app/src/main/AndroidManifest.xml
+      - name: Senkronize et
+        run: npx cap sync android
+      - name: APK derle
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+      - name: APK'yı yeniden adlandır
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk YapiBaronu.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: YapiBaronu-android
+          path: YapiBaronu.apk
+
+  ios:
+    name: iOS IPA (imzasız)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Bağımlılıkları kur
+        run: npm install
+      - name: iOS projesini oluştur
+        run: npx cap add ios
+      - name: İkon ve açılış ekranı
+        run: npx capacitor-assets generate --ios || echo "ikon üretilemedi, varsayılan kullanılacak"
+      - name: Yatay ekran ayarı
+        run: |
+          P=ios/App/App/Info.plist
+          for K in UISupportedInterfaceOrientations "UISupportedInterfaceOrientations~ipad"; do
+            /usr/libexec/PlistBuddy -c "Delete :$K" "$P" || true
+            /usr/libexec/PlistBuddy -c "Add :$K array" "$P"
+            /usr/libexec/PlistBuddy -c "Add :$K:0 string UIInterfaceOrientationLandscapeLeft" "$P"
+            /usr/libexec/PlistBuddy -c "Add :$K:1 string UIInterfaceOrientationLandscapeRight" "$P"
+          done
+      - name: Senkronize et
+        run: npx cap sync ios
+      - name: IPA derle (imzasız)
+        run: |
+          cd ios/App
+          if [ -d App.xcworkspace ]; then SRC="-workspace App.xcworkspace"; else SRC="-project App.xcodeproj"; fi
+          xcodebuild $SRC -scheme App -configuration Release -sdk iphoneos -destination 'generic/platform=iOS' \
+            -derivedDataPath ../../build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build
+          cd ../..
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/App.app Payload/
+          zip -qry YapiBaronu.ipa Payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: YapiBaronu-ios
+          path: YapiBaronu.ipa
+
+  release:
+    name: İndirme sayfası (Releases)
+    needs: [android, ios]
+    if: always() && (needs.android.result == 'success' || needs.ios.result == 'success')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: Yapı Baronu 1.0.${{ github.run_number }}
+          body: |
+            Android: YapiBaronu.apk dosyasını telefona indirip kur ("bilinmeyen kaynaklara izin ver" gerekebilir).
+            iOS: YapiBaronu.ipa imzasızdır. AltStore veya Sideloadly ile kendi Apple kimliğinle yükleyebilirsin.
+          files: out/*
