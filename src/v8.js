@@ -141,7 +141,7 @@ document.addEventListener('click',e=>{
   }
 });
 render=(o=>function(){o();const m=$('#main');if(!m)return;
-  if((curTab==='biz')||(curTab==='land'&&(landList||(curCity&&!cityOpen(CITY[curCity])))))m.classList.add('v7wide');
+  if((curTab==='biz')||(curTab==='auction')||(curTab==='land'&&(landList||(curCity&&!cityOpen(CITY[curCity])))))m.classList.add('v7wide');
   const nb=document.querySelector('nav [data-tab="biz"]');if(nb&&!nb.dataset.v8){nb.dataset.v8=1;nb.lastChild.textContent='Holding'}
 })(render);
 // küçük şehirlerde ilçeler daha doğal dağılsın

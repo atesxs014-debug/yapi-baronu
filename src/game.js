@@ -703,7 +703,7 @@ function offlineCatchup(){
   const m0=S.money;
   for(let i=0;i<days;i++)S.money+=dailyRent()*0.5+bizDaily()*0.5+vehIncome()-dailySalary()-vehUpkeep()-insPremium()-dividends()*0.5;
   let finished=0;
-  [...S.bld].forEach(b=>{if(b.done)return;const d=b.kamu?b.days:(b.dd||TYPE[b.type].days*QUAL[b.q||'std'].days);b.prog+=days*(1+0.2*S.staff.eng+vehSpeed())/d;if(b.prog>=1){complete(b,false);finished++}});
+  [...S.bld].forEach(b=>{if(b.done)return;const d=b.kamu?b.days:(b.dd||TYPE[b.type].days*QUAL[b.q||'std'].days);b.prog+=days*(1+0.2*S.staff.eng+vehSpeed())*fleetMul()/d;if(b.prog>=1){complete(b,false);finished++}});
   S.lastSeen=Date.now();
   const net=S.money-m0,h=Math.floor(away/3600000),mi=Math.floor(away%3600000/60000);
   openSheet(`<h2>Hoş geldin patron</h2>
@@ -1078,7 +1078,7 @@ function updCars(W,gy,dt,cars,max=5){
 function drawScene(now){
   const cv=scene.cv;if(!cv||!cv.isConnected)return;const ctx=scene.ctx;const [W,H]=fitCanvas(cv,ctx);
   const dt=scene.lastT?Math.min(100,now-scene.lastT):16;scene.lastT=now;
-  const cid=S.view,city=CITY[cid],gy=H-44,p=(S.t%DAY_MS)/DAY_MS,wk=S.wx.k,snow=wk==='snow'&&city.cold;
+  const cid=S.view,city=CITY[cid],gy=H-44,p=scene.night?0.86:(S.t%DAY_MS)/DAY_MS,wk=S.wx.k,snow=wk==='snow'&&city.cold;
   const n=drawSky(ctx,W,H,gy,p,cid,now,wk);
   const items=sceneItems(cid);let total=24;items.forEach(it=>total+=it.W+18);
   scene.maxScroll=Math.max(0,total-W);scene.scroll=clamp(scene.scroll,0,scene.maxScroll);
