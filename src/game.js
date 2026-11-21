@@ -636,7 +636,7 @@ function newDay(){
     S.seenAuction=false;S.news.unshift({d:S.day,txt:`Belediye ${c.n} ${c.d[di][0]}'de ${m2(size)} arsayı ihaleye çıkardı.`});sfx('open');
   }
   if(S.day>5&&Math.random()<0.07)randomEvent();
-  if(S.wx.k==='storm'){sfx('thunder');if(curTab==='home')scene.flash=1}
+  if(S.wx.k==='storm'){sfx('thunder');if(curTab==='sehir')scene.flash=1}
   S.news=S.news.slice(0,8);
 }
 const EVENTS=[
@@ -1139,7 +1139,7 @@ function logoSvg(sz=34,shape=S.logo.shape,col=S.logo.col){
 
 // ---------- UI
 let curTab='home',curCity=null,selQ='std',sub='staff';
-function go(tab){curTab=tab;if(tab!=='land'){curCity=null;curDist=null}if(tab!=='home'){scene.edit=false;scene.sel=null}if(tab==='proj')S.projAlert=false;if(tab==='auction')S.seenAuction=true;render();$('#main').scrollTop=0}
+function go(tab){curTab=tab;if(tab!=='land'){curCity=null;curDist=null}if(tab!=='sehir'){scene.edit=false;scene.sel=null}if(tab==='proj')S.projAlert=false;if(tab==='auction')S.seenAuction=true;render();$('#main').scrollTop=0}
 document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('click',()=>{sfx('tap');go(b.dataset.tab)}));
 
 let shownMoney=null;
@@ -1171,7 +1171,7 @@ function viewHome(){
   const sel=scene.sel&&S.deco.find(d=>d.id===scene.sel);
   return `<div class="scene" id="scenebox"><div class="chips">${cities.map(c=>`<button class="chip" data-act="view" data-id="${c.id}" aria-pressed="${c.id===S.view}">${c.n}</button>`).join('')}</div>
      <span class="tap">${scene.edit?'Düzenleme: bir şeye dokun':'Binaya dokun · kaydır'}</span><span class="clock" id="clock"></span></div>
-   ${scene.edit?'':homeDash()}
+   <button class="back" data-act="gotab" data-id="home">‹ Ana ekran</button>
    ${scene.edit?`<div class="card"><div class="title">Şehri düzenle · ${CITY[S.view].n}</div>
       <p class="hint">Bir binaya ya da süse dokun, sonra oklarla sırasını değiştir. Süsler bu şehirdeki kiraları artırır (şu an +%${Math.round(decoBonus(S.view)*1000)/10}).</p>
       <div class="editbar"><button class="btn" data-act="mv" data-id="-1" ${scene.sel?'':'disabled'} aria-label="Sola taşı">◀ Sola</button><button class="btn" data-act="mv" data-id="1" ${scene.sel?'':'disabled'} aria-label="Sağa taşı">Sağa ▶</button>
@@ -1436,10 +1436,10 @@ function corpOffice(){
 }
 function render(){
   renderHud();
-  const v={home:viewHome,land:viewLand,proj:viewProj,biz:viewBiz,auction:viewAuction,bank:viewBank,corp:viewCorp,borsa:viewBorsa}[curTab]();
+  const v={home:viewDash,sehir:viewHome,land:viewLand,proj:viewProj,biz:viewBiz,auction:viewAuction,bank:viewBank,corp:viewCorp,borsa:viewBorsa}[curTab]();
   const m=$('#main'),keep=m.scrollTop,sel=$('#loanamt')?.value;
-  m.className=curTab;m.innerHTML=v;m.scrollTop=keep;if(sel&&$('#loanamt'))$('#loanamt').value=sel;
-  if(curTab==='home')$('#scenebox').prepend(ensureScene());
+  m.className=curTab==='sehir'?'home':curTab==='home'?'dashhome':curTab;m.innerHTML=v;m.scrollTop=keep;if(sel&&$('#loanamt'))$('#loanamt').value=sel;
+  if(curTab==='sehir')$('#scenebox').prepend(ensureScene());
 }
 function openSheet(html){const s=$('#sheet');s.innerHTML=`<div class="sheet">${html}</div>`;s.hidden=false;sfx('open')}
 function closeSheet(){$('#sheet').hidden=true;$('#sheet').innerHTML='';queueNext()}
@@ -1523,7 +1523,7 @@ const TUT=[
  {t:'Esenyurt ilçesine gir. En ucuz ilçe orası.',done:()=>curDist!=null||S.plots.length||S.bld.length},
  {t:'Boş bir parsele dokun ve satın al.',done:()=>S.plots.length||S.bld.length},
  {t:'Arsanın yanındaki "İnşa et"e bas ve Müstakil Ev seç.',done:()=>S.bld.length},
- {t:'İnşaat başladı! 1 dakika 1 gün. Vinçleri Şehrim ekranından izleyebilirsin.',done:()=>S.bld.some(b=>b.done)||S.stats.sold},
+ {t:'İnşaat başladı! 1 dakika 1 gün. Ana ekranda ilerlemesini, Şehrim kutusunda vinçleri izleyebilirsin.',done:()=>S.bld.some(b=>b.done)||S.stats.sold},
  {t:'Ev bitti. Projeler sekmesinde "Satışa çıkar" ya da "Kirala"ya bas.',tab:'proj',done:()=>S.stats.sold||S.bld.some(b=>b.units.some(u=>u==='listing'||u==='rented'))},
  {t:'Şirket sekmesinden iş makinesi al, inşaatların hızlansın.',tab:'corp',done:()=>vehCount()>0},
  {t:'İşler sekmesinden bir işletme kur: kafe, tarla, akaryakıt istasyonu...',tab:'biz',done:()=>S.biz.length>0},
@@ -1656,7 +1656,7 @@ document.addEventListener('pointerdown',()=>{if(AU.ctx&&AU.ctx.state==='suspende
 // ---------- loops
 function frame(now){
   if(!$('#splash').hidden)drawSplash(now);
-  else if(started&&curTab==='home'&&!document.hidden)drawScene(now);
+  else if(started&&curTab==='sehir'&&!document.hidden)drawScene(now);
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
@@ -1664,7 +1664,7 @@ let last=performance.now(),acc=0;
 setInterval(()=>{
   const now=performance.now(),dt=Math.min(now-last,5000);last=now;if(!started||!S)return;
   tick(dt);acc+=dt;
-  const live=curTab==='proj'||curTab==='auction'||(curTab==='borsa'&&acc>=3000)||(curTab==='home'&&acc>=3000)||(curTab==='land'&&acc>=4000);
+  const live=curTab==='proj'||curTab==='auction'||(curTab==='borsa'&&acc>=3000)||((curTab==='home'||curTab==='sehir')&&acc>=3000)||(curTab==='land'&&acc>=4000);
   if(acc>=4000)acc=0;
   if(live&&$('#sheet').hidden&&!document.activeElement?.matches('input,select')&&!scene.drag)render();else renderHud();
 },1000);

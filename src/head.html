@@ -277,22 +277,22 @@ h3{font-family:var(--f-disp);font-weight:600;font-size:18px;text-transform:upper
 
 <div class="app">
   <header class="hud">
-    <button class="gear" data-act="settings" aria-label="Ayarlar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg></button>
-    <div class="brandwrap"><span id="logo"></span><div class="brand" id="brand">Yapı Baronu<small>İNŞAAT A.Ş.</small></div></div>
-    <div class="cash num" id="cash">₺0</div>
-    <div class="subhud">
-      <span>Gün <b id="day">1</b></span>
-      <span>Servet <b id="worth">0</b></span>
-      <span>Kira <b id="rent">0</b>/gün</span>
-      <span class="wx" id="wx"></span>
-      <span class="lvl">Sv.<b id="lvl">1</b><span class="bar"><i id="xpbar"></i></span></span>
+    <div class="hl"><button class="lvbig" data-act="gocorp" data-id="rank" aria-label="Seviye"><b id="lvl">1</b><span class="bar"><i id="xpbar"></i></span></button>
+      <div class="hlt"><div class="row1"><span id="logo"></span><div class="brand" id="brand">Yapı Baronu</div><button class="rankbtn" data-act="gocorp" data-id="rank"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 01-8 0zM8 6H4a4 4 0 004 4M16 6h4a4 4 0 01-4 4M12 13v4M8 21h8"/></svg>Sıran: <b id="rank">1</b></button></div>
+      <div class="row2" id="hsub"></div></div></div>
+    <div class="hr">
+      <button class="ib" data-act="gotab" data-id="sehir" aria-label="Görevler"><svg viewBox="0 0 24 24"><path d="M9 11l2 2 4-4M5 4h14v16H5z"/></svg><span class="badge" id="goalbadge" hidden></span></button>
+      <span class="cashpill"><small>KASA</small><b class="cash num" id="cash">₺0</b></span>
+      <span class="wxpill" id="wx"></span>
+      <button class="gear" data-act="settings" aria-label="Ayarlar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg></button>
+      <span class="daypill"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Gün <b id="day">1</b> · <span id="wday"></span></span><span class="daybar"><i id="daybar"></i></span></span>
+      <span hidden><b id="worth"></b><b id="rent"></b></span>
     </div>
-    <div class="daybar"><i id="daybar"></i></div>
   </header>
   <main id="main"></main>
   <div id="coach" hidden></div>
   <nav class="tabs" role="tablist">
-    <button data-tab="home" role="tab"><svg viewBox="0 0 24 24"><path d="M2 20h20M4 20V10h5v10M9 20V5h6v15M15 20v-8h5v8"/></svg>Şehrim<span class="dot" id="homedot" hidden></span></button>
+    <button data-tab="home" role="tab"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h5v-6h4v6h5V10"/></svg>Ana ekran<span class="dot" id="homedot" hidden></span></button>
     <button data-tab="land" role="tab"><svg viewBox="0 0 24 24"><path d="M3 20h18M4 16l4-5 3 3 4-6 5 8"/><circle cx="17" cy="5" r="1.5"/></svg>Arsalar</button>
     <button data-tab="proj" role="tab"><svg viewBox="0 0 24 24"><path d="M5 20V4h3v16M8 6h12l-3 3M17 9v4M11 20v-7h7v7"/></svg>Projeler<span class="dot" id="projdot" hidden></span></button>
     <button data-tab="biz" role="tab"><svg viewBox="0 0 24 24"><path d="M12 3c3 4 5 6.5 5 9a5 5 0 01-10 0c0-2.5 2-5 5-9zM4 21h16"/></svg>İşler</button>
