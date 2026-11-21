@@ -42,15 +42,23 @@ function cityMap(cid){
   const pins=pts.map(([x,y],i)=>{const dn=c.d[i][0],mine=cityAssets(cid,i),fr=freeCount(cid,i),k=ren.some(r=>(r.di||0)===i);
     const num=mapFil==='mine'?mine:fr;const show=mapFil!=='mine'||mine;
     return `<g class="v7pin${mine?' me':''}" data-act="dist" data-id="${i}" role="button" aria-label="${dn}">
-      ${show?`<path d="M${x} ${y+2}l-4 -7h8z" class="pt"/><circle cx="${x}" cy="${y-12}" r="9" class="pc"/><text x="${x}" y="${y-8.5}" class="pn">${num}</text>`:`<circle cx="${x}" cy="${y}" r="2.5" class="pd"/>`}
-      ${k?`<circle cx="${x+13}" cy="${y-16}" r="6.5" class="pk"/><text x="${x+13}" y="${y-13.5}" class="pkt">D</text>`:''}
-      <text x="${x}" y="${y+11}" class="pl">${dn}</text></g>`}).join('');
+      ${show?`<ellipse cx="${x}" cy="${y+1}" rx="5" ry="1.8" class="ps"/><path d="M${x} ${y}L${x-6.6} ${y-9}A9.5 9.5 0 1 1 ${x+6.6} ${y-9}Z" class="pc"/><circle cx="${x}" cy="${y-15}" r="6.8" class="pi"/><text x="${x}" y="${y-12}" class="pn">${num}</text>`:`<circle cx="${x}" cy="${y}" r="2.6" class="pd"/>`}
+      ${k?`<circle cx="${x+12}" cy="${y-21}" r="6" class="pk"/><text x="${x+12}" y="${y-18.6}" class="pkt">D</text>`:''}
+      <text x="${x}" y="${y+10}" class="pl">${dn}</text></g>`}).join('');
+  const rr=mulberry(hash('blk'+cid));let blocks='';for(let k=0;k<260;k++){const x=rr()*400,y=rr()*220,w=2+rr()*4,h=2+rr()*3;blocks+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" rx=".6"/>`}
+  let parks='';for(let k=0;k<14;k++){const x=rr()*400,y=rr()*220;parks+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(2+rr()*3).toFixed(1)}"/>`}
+  const bridges=cid==='istanbul'?[[52,220,246],[104,224,244],[138,214,252]].map(([y,x1,x2])=>`<path d="M${x1} ${y}H${x2}" class="brg"/><path d="M${x1} ${y}H${x2}" class="brg2"/>`).join(''):'';
   return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="group" aria-label="${c.n} ilçe haritası">
-   <defs>${clip}<pattern id="${uid7}w" width="26" height="14" patternUnits="userSpaceOnUse"><path d="M3 8q3-3 6 0t6 0" class="wave"/></pattern></defs>
-   <rect width="${W}" height="${H}" class="${ls.sea?'v7sea':'v7out'}"/>${ls.sea?`<rect width="${W}" height="${H}" fill="url(#${uid7}w)"/>`:''}
-   <g clip-path="url(#${uid7})">${ls.sea?'':'<rect width="400" height="220" class="v7sea"/>'}${cellsH}</g>
-   ${ls.sea?`<path d="${ls.sea}" class="v7sea"/><path d="${ls.sea}" fill="url(#${uid7}w)"/><path d="${ls.sea}" class="v7coast"/>`:`<path d="${ls.land}" class="v7coast"/>`}
-   ${ls.labels.map(([x,y,t])=>`<text x="${x}" y="${y}" class="v7sl">${t}</text>`).join('')}${pins}</svg>`;
+   <defs>${clip}<pattern id="${uid7}w" width="30" height="16" patternUnits="userSpaceOnUse"><path d="M3 9q3.5-3.5 7 0t7 0" class="wave"/></pattern>
+    <linearGradient id="${uid7}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fd0ea"/><stop offset="1" stop-color="#3f9cc2"/></linearGradient>
+    <radialGradient id="${uid7}h" cx=".3" cy=".2" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".32"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".12"/></radialGradient>
+    <filter id="${uid7}f" x="-5%" y="-5%" width="110%" height="115%"><feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="#0b3a52" flood-opacity=".45"/></filter></defs>
+   <rect width="${W}" height="${H}" ${ls.sea?`fill="url(#${uid7}s)"`:'class="v7out"'}/><rect width="${W}" height="${H}" fill="url(#${uid7}w)" opacity="${ls.sea?1:.5}"/>
+   <g filter="url(#${uid7}f)"><g clip-path="url(#${uid7})">${cellsH}<g class="blk">${blocks}</g><g class="prk">${parks}</g><rect width="400" height="220" fill="url(#${uid7}h)" pointer-events="none"/></g></g>
+   ${ls.sea?`<path d="${ls.sea}" class="v7foam"/><path d="${ls.sea}" class="v7coast"/>`:`<path d="${ls.land}" class="v7foam"/><path d="${ls.land}" class="v7coast"/>`}${bridges}
+   ${ls.labels.map(([x,y,t])=>`<text x="${x}" y="${y}" class="v7sl">${t}</text>`).join('')}
+   <g transform="translate(${ls.sea&&cid==='istanbul'?380:22} ${ls.sea&&cid==='istanbul'?40:198})" class="cmp"><circle r="10"/><path d="M0 -8L2.6 0H-2.6Z" class="n"/><path d="M0 8L2.6 0H-2.6Z"/><text y="-11.5">K</text></g>
+   ${pins}</svg>`;
 }
 function viewMap(cid){
   const c=CITY[cid],idx=S.idx[cid];
@@ -58,7 +66,7 @@ function viewMap(cid){
   const tiers=TIER7.map((t,i)=>{const lo=c.land*t[2]*idx,hi=i?c.land*TIER7[i-1][2]*idx:0;
     return `<div class="lg"><i style="background:${t[1]}"></i><b>${t[0]}</b><span>${i===0?fmt(lo)+' +':i===3?'< '+fmt(hi):fmt(lo)+'–'+fmt(hi)}</span></div>`}).join('');
   const locked=CITIES.filter(x=>!cityOpen(x)).length;
-  return `<div class="v7h"><div class="tt"><small>${c.n.toLocaleUpperCase('tr-TR')} · ${c.d.length} İLÇE</small><b>İlçeni seç</b></div><span class="grow"></span>${ctrend(cid)}<span class="meta">Endeks ${fx2(idx)}</span></div>
+  return `<div class="v7h"><div class="tt"><small>${c.n.toLocaleUpperCase('tr-TR')} · ${c.d.length} İLÇE</small><b>İlçeni seç</b></div><span class="grow"></span>${ctrend(cid)}<span class="meta">Endeks ${fx2(idx)}</span><button class="v7new" data-act="x7list"><span><b>${locked?'Yeni şehir aç':'Şehir değiştir'}</b><small>${locked?locked+' şehir seni bekliyor':CITIES.length+' şehir açık'}</small></span><i>→</i></button></div>
    <div class="v7map">
     <div class="v7mapc">${cityMap(cid)}<button class="v7city" data-act="x7list"><svg viewBox="0 0 24 24"><path d="M12 22s7-7.5 7-13a7 7 0 10-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/></svg>${c.n}<i>▾</i></button>
      <span class="v7hint">${mapFil==='mine'?`Rakam: varlığın · ${mineD} ilçedesin`:'Rakam: boş arsa · ilçeye dokun'}</span>${plots?`<button class="v7mine" data-act="x7plots"><b>Elindeki arsalar · ${plots}</b><small>İnşaat başlat ›</small></button>`:''}</div>
@@ -68,7 +76,7 @@ function viewMap(cid){
      <div class="k">ARSA FİYATI (₺/m²)</div>${tiers}
      <div class="k">İŞARETLER</div>
      <div class="lg"><i class="pin k">D</i><b>Kentsel dönüşüm</b><span>${ren}</span></div>
-     <button class="v7new" data-act="x7list"><span><b>${locked?'Yeni şehir aç':'Şehir değiştir'}</b><small>${locked?locked+' şehir seni bekliyor':CITIES.length+' şehir açık'}</small></span><i>→</i></button>
+
     </div></div>`;
 }
 
@@ -319,6 +327,16 @@ function officeArt(lv){
   });
   // zemin
   s+=`<rect x="0" y="${fy}" width="${W}" height="${H-fy}" fill="${D.floor}"/>`;
+  s+=`<defs><linearGradient id="ofl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".18"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>
+   <linearGradient id="oray" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+   <radialGradient id="ovig" cx=".5" cy=".45" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></radialGradient></defs>`;
+  s+=`<rect x="0" y="${fy}" width="${W}" height="22" fill="url(#ofl)"/><rect x="0" y="${fy-5}" width="${W}" height="5" fill="${lv===4?'#1c1f28':'rgba(0,0,0,.18)'}"/>`;
+  if(lv>0){s+=`<ellipse cx="${W/2}" cy="${fy+44}" rx="${120+lv*20}" ry="20" fill="${['','#b5523f','#4f6fa8','#7c8a9a','#8a2f3c'][lv]}" opacity=".55"/><ellipse cx="${W/2}" cy="${fy+44}" rx="${108+lv*20}" ry="15" fill="none" stroke="#fff" stroke-opacity=".35" stroke-dasharray="4 3"/>`;
+    wins.forEach(([x,y,w,h,kind])=>{if(kind)return;s+=`<path d="M${x} ${y+h}L${x+w} ${y+h}L${x+w+60} ${fy+60}L${x+40} ${fy+60}Z" fill="url(#oray)" opacity=".5"/>`});}
+  // tavan ve lambalar
+  s+=`<rect x="0" y="0" width="${W}" height="10" fill="${lv===4?'#14161d':'rgba(0,0,0,.12)'}"/>`;
+  if(lv>=1)[110,220,330].forEach(x=>s+=`<rect x="${x-22}" y="10" width="44" height="4" rx="2" fill="${lv===4?'#ffd88a':'#fffbe8'}"/><path d="M${x-22} 14L${x-40} 60H${x+40}L${x+22} 14Z" fill="#fff8d0" opacity=".12"/>`);
+  if(lv===1||lv===2)s+=`<rect x="${lv===1?150:40}" y="${lv===1?40:140}" width="${lv===1?58:0}" height="${lv===1?40:0}" fill="#fff" stroke="#8a6a44" stroke-width="3"/>${lv===1?'<path d="M154 76l14-16 10 10 8-6 18 12z" fill="#43b394"/><circle cx="190" cy="50" r="5" fill="#ffb020"/>':''}`;
   if(lv===0)s+=`<ellipse cx="120" cy="${fy+44}" rx="30" ry="7" fill="rgba(0,0,0,.18)"/><path d="M220 0v22" stroke="#333"/><circle cx="220" cy="26" r="5" fill="#ffe38a"/>`;
   else for(let x=0;x<W;x+=lv===3?40:28)s+=`<path d="M${x} ${fy}V${H}" stroke="rgba(0,0,0,.08)"/>`;
   // logo
@@ -340,6 +358,7 @@ function officeArt(lv){
   if(lv>=1)s+=`<rect x="${W-34}" y="${fy-34}" width="16" height="16" fill="#c27a4a"/><circle cx="${W-26}" cy="${fy-44}" r="14" fill="#4f9a45"/><circle cx="${W-32}" cy="${fy-52}" r="8" fill="#6cb85a"/>`;
   if(lv===2)s+=`<rect x="190" y="60" width="50" height="80" fill="#c9a77a"/>${[0,1,2,3].map(k=>`<rect x="194" y="${64+k*19}" width="42" height="3" fill="#8a6a44"/><rect x="${196+k*7}" y="${66+k*19}" width="6" height="14" fill="${['#e5484d','#2f8fe8','#22a862','#ff8a00'][k]}"/>`).join('')}`;
   if(lv===4)s+=`<g transform="translate(206 ${fy-118})">${logoSvg(36)}</g><rect x="388" y="${fy-50}" width="40" height="48" fill="#3a2a20"/><path d="M398 ${fy-40}h20M398 ${fy-26}h20" stroke="#ffd36b" stroke-width="3"/>`;
+  s+=`<rect width="${W}" height="${H}" fill="url(#ovig)" pointer-events="none"/>`;
   return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${s}</svg>`;
 }
 corpOffice=function(){
