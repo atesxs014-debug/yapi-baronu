@@ -2,7 +2,7 @@
   "appId": "com.yapibaronu.oyun",
   "appName": "Yapı Baronu",
   "webDir": "www",
-  "backgroundColor": "#0c1f1c",
-  "android": { "backgroundColor": "#0c1f1c" },
-  "ios": { "backgroundColor": "#0c1f1c", "contentInset": "never" }
+  "backgroundColor": "#fdf4e7",
+  "android": { "backgroundColor": "#fdf4e7" },
+  "ios": { "backgroundColor": "#fdf4e7", "contentInset": "never" }
 }

@@ -477,3 +477,10 @@ document.addEventListener('click',e=>{
     case 'dzgo':startDesign();break;
   }
 });
+
+// ---------- görünüm temaları
+const THEMES=[['gunes','Güneşli Şehir'],['neon','Neon Gece'],['mermer','Altın Mermer'],['oyuncak','Oyuncak Blok'],['plan','Mimari Plan']];
+function applyTheme(){document.documentElement.dataset.theme=SET.theme||'gunes';const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()}
+applyTheme();
+settingsSheet=(o=>function(){o();const sh=$('#sheet .sheet h2');if(sh)sh.insertAdjacentHTML('afterend',`<div class="meta">Görünüm</div><div class="themes">${THEMES.map(([k,n])=>`<button data-act="xtheme" data-id="${k}" aria-pressed="${(SET.theme||'gunes')===k}">${n}</button>`).join('')}</div>`)})(settingsSheet);
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act="xtheme"]');if(!el)return;SET.theme=el.dataset.id;saveSet();applyTheme();sfx('tap');settingsSheet();if(S&&started)render()});

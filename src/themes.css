@@ -1,0 +1,107 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700;800&family=Orbitron:wght@600;800&family=Exo+2:wght@400;600&family=Share+Tech+Mono&family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&family=Lilita+One&family=Fredoka:wght@400;600&family=Architects+Daughter&family=IBM+Plex+Sans+Condensed:wght@400;600&display=swap">
+<style>
+/* ===== Tema altyapısı: sabit renkleri değişkenlere bağla ===== */
+.btn.primary{box-shadow:0 3px 0 var(--accent-sh,#b8462a)}
+.btn.primary:active{box-shadow:0 1px 0 var(--accent-sh,#b8462a)}
+.prog i{background:repeating-linear-gradient(45deg,var(--accent) 0 8px,var(--accent-sh,#e2603b) 8px 16px);background-size:22px 22px}
+.chip,.scene .clock,.scene .tap{background:var(--chip,rgba(12,31,28,.74))}
+.sheet-wrap{background:var(--scrim,rgba(5,10,18,.65))}
+#splash,#rotate{background:var(--splash,#081915)}
+
+/* 1. Güneşli Şehir: aydınlık, yumuşak, sıcak */
+html[data-theme="gunes"]{--bg:#fdf4e7;--grid:transparent;--panel:#ffffff;--panel2:#fff1dc;--line:#f0d9b8;--fg:#3b2816;--muted:#8d7357;
+  --accent:#ff8a00;--accent-ink:#fff;--accent-sh:#c96400;--good:#22a862;--bad:#e5484d;--info:#2f8fe8;--violet:#8b5cf6;
+  --f-disp:"Baloo 2",system-ui,sans-serif;--f-body:"Nunito",system-ui,sans-serif;--f-num:"Nunito",system-ui,sans-serif;
+  --chip:rgba(59,40,22,.55);--scrim:rgba(59,40,22,.35);--splash:#fdf4e7;color-scheme:light}
+html[data-theme="gunes"] body{background-image:radial-gradient(#f3dfc2 1.2px,transparent 1.2px);background-size:22px 22px}
+html[data-theme="gunes"] .card,html[data-theme="gunes"] .tile,html[data-theme="gunes"] .city,html[data-theme="gunes"] .pcard,html[data-theme="gunes"] .quick button,html[data-theme="gunes"] .mrow{border-radius:16px;border-color:transparent;box-shadow:0 4px 14px rgba(160,110,50,.13)}
+html[data-theme="gunes"] .btn{border-radius:999px}
+html[data-theme="gunes"] .num,html[data-theme="gunes"] .cash{font-weight:800}
+html[data-theme="gunes"] h2,html[data-theme="gunes"] h3,html[data-theme="gunes"] .brand,html[data-theme="gunes"] .city .cn{text-transform:none;letter-spacing:0}
+html[data-theme="gunes"] header.hud{background:#fff;border-bottom:0;box-shadow:0 2px 12px rgba(160,110,50,.15)}
+html[data-theme="gunes"] nav.tabs{background:#fff;border-color:transparent;box-shadow:0 0 12px rgba(160,110,50,.15)}
+html[data-theme="gunes"] .sheet{border-top:0;border-radius:24px 24px 0 0}
+html[data-theme="gunes"] .dash,html[data-theme="gunes"] .scorecard{background:linear-gradient(135deg,#ff9f1c,#ff6b3d);color:#fff}
+html[data-theme="gunes"] .dash .k,html[data-theme="gunes"] .dash .meta,html[data-theme="gunes"] .dash .grid4 .k{color:rgba(255,255,255,.85)}
+html[data-theme="gunes"] .dash .grid4>div{background:rgba(255,255,255,.2)}
+html[data-theme="gunes"] .dash .pos,html[data-theme="gunes"] .dash .neg{color:#fff}
+
+/* 2. Neon Gece: koyu mor, parlayan neon */
+html[data-theme="neon"]{--bg:#0a0614;--grid:#160d2a;--panel:#140d26;--panel2:#1e1438;--line:#3b2b6a;--fg:#f4eeff;--muted:#a597cf;
+  --accent:#ff2bd6;--accent-ink:#fff;--accent-sh:#9c1383;--good:#3dffa8;--bad:#ff4d6d;--info:#22e4ff;--violet:#a78bfa;
+  --f-disp:"Orbitron",system-ui,sans-serif;--f-body:"Exo 2",system-ui,sans-serif;--f-num:"Share Tech Mono",monospace;
+  --chip:rgba(20,13,38,.8);--scrim:rgba(5,0,15,.75);--splash:#0a0614}
+html[data-theme="neon"] .card,html[data-theme="neon"] .tile,html[data-theme="neon"] .city,html[data-theme="neon"] .pcard,html[data-theme="neon"] .quick button,html[data-theme="neon"] .mrow{border-radius:10px;box-shadow:0 0 0 1px rgba(255,43,214,.12),0 0 18px rgba(124,58,237,.18)}
+html[data-theme="neon"] .btn.primary{box-shadow:0 0 16px rgba(255,43,214,.55)}
+html[data-theme="neon"] h2,html[data-theme="neon"] .bigcash,html[data-theme="neon"] .cash{text-shadow:0 0 12px rgba(34,228,255,.55);color:#e9fbff}
+html[data-theme="neon"] h2{font-size:22px}html[data-theme="neon"] h3{color:var(--info)}
+html[data-theme="neon"] header.hud{border-bottom:1px solid var(--accent);box-shadow:0 2px 18px rgba(255,43,214,.35)}
+html[data-theme="neon"] nav.tabs button[aria-selected="true"]{text-shadow:0 0 10px var(--accent)}
+html[data-theme="neon"] .dash{background:linear-gradient(135deg,#2a0f4d,#140d26 60%,#0b2a3d)}
+
+/* 3. Altın Mermer: siyah, şampanya, zarif */
+html[data-theme="mermer"]{--bg:#0e0d0b;--grid:transparent;--panel:#191714;--panel2:#23201b;--line:#3a3428;--fg:#f3ece0;--muted:#a89c86;
+  --accent:#c9a86a;--accent-ink:#14110b;--accent-sh:#8a7244;--good:#9cc59a;--bad:#d9776b;--info:#8fb3c9;--violet:#b9a3d6;
+  --f-disp:"Playfair Display",Georgia,serif;--f-body:"Inter",system-ui,sans-serif;--f-num:"Inter",system-ui,sans-serif;
+  --chip:rgba(14,13,11,.75);--scrim:rgba(0,0,0,.7);--splash:#0e0d0b}
+html[data-theme="mermer"] body{background-image:radial-gradient(ellipse at 20% 0%,rgba(201,168,106,.09),transparent 60%),radial-gradient(ellipse at 100% 100%,rgba(201,168,106,.06),transparent 50%)}
+html[data-theme="mermer"] .card,html[data-theme="mermer"] .tile,html[data-theme="mermer"] .city,html[data-theme="mermer"] .pcard,html[data-theme="mermer"] .quick button,html[data-theme="mermer"] .mrow,html[data-theme="mermer"] .btn{border-radius:2px}
+html[data-theme="mermer"] h2{text-transform:none;font-style:italic;letter-spacing:.01em;color:var(--accent)}
+html[data-theme="mermer"] h3,html[data-theme="mermer"] .dash .k{font-family:var(--f-body);font-size:11px;letter-spacing:.28em;font-weight:600}
+html[data-theme="mermer"] .brand{text-transform:none;font-size:22px}
+html[data-theme="mermer"] .btn.primary{box-shadow:none;background:linear-gradient(180deg,#e2c68f,#b8924f)}
+html[data-theme="mermer"] header.hud{border-bottom:1px solid var(--accent)}
+html[data-theme="mermer"] .num,html[data-theme="mermer"] .cash{font-weight:500;letter-spacing:.02em}
+html[data-theme="mermer"] .bigcash{font-family:var(--f-disp);font-weight:600}
+html[data-theme="mermer"] .dash{background:linear-gradient(135deg,#1f1b15,#141210);border-color:#5a4b30}
+
+/* 4. Oyuncak Blok: parlak, kalın çizgili, çizgi film */
+html[data-theme="oyuncak"]{--bg:#58c4f0;--grid:transparent;--panel:#ffffff;--panel2:#fff3c4;--line:#1d2b4f;--fg:#1d2b4f;--muted:#51628c;
+  --accent:#ffcc00;--accent-ink:#1d2b4f;--accent-sh:#1d2b4f;--good:#2fbf55;--bad:#ff5252;--info:#2f6bff;--violet:#9b5cff;
+  --f-disp:"Lilita One",system-ui,sans-serif;--f-body:"Fredoka",system-ui,sans-serif;--f-num:"Fredoka",system-ui,sans-serif;
+  --chip:rgba(29,43,79,.8);--scrim:rgba(29,43,79,.45);--splash:#58c4f0;color-scheme:light}
+html[data-theme="oyuncak"] body{background-image:linear-gradient(180deg,#58c4f0,#a9e4fa)}
+html[data-theme="oyuncak"] .card,html[data-theme="oyuncak"] .tile,html[data-theme="oyuncak"] .city,html[data-theme="oyuncak"] .pcard,html[data-theme="oyuncak"] .quick button,html[data-theme="oyuncak"] .mrow,html[data-theme="oyuncak"] .btn,html[data-theme="oyuncak"] .seg button,html[data-theme="oyuncak"] .subtabs button{border:3px solid var(--line);border-radius:14px;box-shadow:0 4px 0 var(--line)}
+html[data-theme="oyuncak"] .btn.primary{box-shadow:0 4px 0 var(--line)}
+html[data-theme="oyuncak"] h2,html[data-theme="oyuncak"] h3{color:#fff;-webkit-text-stroke:1.5px #1d2b4f;paint-order:stroke fill;text-shadow:0 3px 0 #1d2b4f;letter-spacing:.02em}
+html[data-theme="oyuncak"] h3{font-size:19px}
+html[data-theme="oyuncak"] .hint{color:#13254d}
+html[data-theme="oyuncak"] header.hud{background:#ffcc00;border-bottom:3px solid var(--line)}
+html[data-theme="oyuncak"] nav.tabs{background:#fff;border-color:var(--line);border-width:3px}
+html[data-theme="oyuncak"] .sheet{border:3px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0}
+html[data-theme="oyuncak"] .dash{background:#fff3c4}
+html[data-theme="oyuncak"] .num,html[data-theme="oyuncak"] .cash{font-weight:600}
+
+/* 5. Mimari Plan: lacivert yerine çelik mavisi çizim kağıdı, beyaz çizgiler */
+html[data-theme="plan"]{--bg:#1d4e89;--grid:rgba(255,255,255,.09);--panel:rgba(255,255,255,.06);--panel2:rgba(255,255,255,.12);--line:rgba(255,255,255,.45);--fg:#f2f8ff;--muted:#b7d0ef;
+  --accent:#7cf2c4;--accent-ink:#0f2f57;--accent-sh:#3fae86;--good:#b6ff7a;--bad:#ffa08f;--info:#a8dcff;--violet:#d6c4ff;
+  --f-disp:"Architects Daughter",cursive;--f-body:"IBM Plex Sans Condensed",system-ui,sans-serif;--f-num:"IBM Plex Mono",monospace;
+  --chip:rgba(15,47,87,.8);--scrim:rgba(10,30,60,.6);--splash:#1d4e89}
+html[data-theme="plan"] body{background-size:24px 24px,24px 24px;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px)}
+html[data-theme="plan"] .card,html[data-theme="plan"] .tile,html[data-theme="plan"] .city,html[data-theme="plan"] .pcard,html[data-theme="plan"] .quick button,html[data-theme="plan"] .mrow{border-radius:0;border-style:dashed;backdrop-filter:blur(2px)}
+html[data-theme="plan"] .btn{border-radius:0}
+html[data-theme="plan"] h2,html[data-theme="plan"] h3,html[data-theme="plan"] .brand{text-transform:none;letter-spacing:.02em}
+html[data-theme="plan"] h3{color:var(--accent)}
+html[data-theme="plan"] header.hud{background:#173f70;border-bottom:2px solid #fff}
+html[data-theme="plan"] nav.tabs{background:#173f70}
+html[data-theme="plan"] .sheet{background:#1d4e89;border-top:2px dashed #fff;border-radius:0}
+html[data-theme="plan"] .dash{background:rgba(255,255,255,.08)}
+</style>
+<style>
+.themes{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
+.themes button{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px;font-weight:700;font-size:12px;color:var(--fg)}
+.themes button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+html[data-theme="gunes"] .toggle,html[data-theme="gunes"] .field input,html[data-theme="gunes"] select.btn{border-radius:12px}
+html[data-theme="gunes"] .parcel{border-radius:12px}
+html[data-theme="gunes"] .map{border-radius:16px;overflow:visible}
+html[data-theme="gunes"] .map svg{border-radius:16px 16px 0 0}
+html[data-theme="gunes"] .legend{border-radius:0 0 16px 16px}
+</style>
+<style>
+html[data-theme="gunes"] .logo{color:#3b2816}
+html[data-theme="gunes"] .logo span{color:var(--accent)}
+html[data-theme="gunes"] .scorecard{color:#fff}
+html[data-theme="gunes"] .scorecard .k,html[data-theme="gunes"] .scorecard .meta,html[data-theme="gunes"] .scorecard small{color:rgba(255,255,255,.88)}
+html[data-theme="gunes"] .scorecard .pill{background:rgba(255,255,255,.25);color:#fff;border-color:transparent}
+.card.bld>.reinf{order:9}
+</style>
